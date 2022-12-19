@@ -44,6 +44,11 @@ class Database {
     private function makeTables() {
         $conn = $this->connect();
 
+        $tableSession = "CREATE TABLE IF NOT EXISTS session (
+            ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+            SESSION_ID INT NOT NULL
+        );";
+
         $tableAdmin = "CREATE TABLE IF NOT EXISTS admin (
             ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
             USERNAME VARCHAR(255) NOT NULL,
@@ -67,6 +72,9 @@ class Database {
             TANGGAL DATE NOT NULL
         );";
 
+        if ($conn->query($tableSession) != TRUE) {
+            echo "Error creating table: " . $conn->error;
+        }
         if ($conn->query($tableAdmin) != TRUE) {
             echo "Error creating table: " . $conn->error;
         }

@@ -1,12 +1,16 @@
-<html>
-<head>
-    <title>Membuat Form Login Dengan PHP MySQL | Tutorial</title>    
-</head>
-<body>
-    <h1>Membuat Form Login Dengan PHP MySQL | Tutorial</h1>
-    <h3>LOGIN BERHASIL !!!</h3>
-    <br />
-    <br />
-    <a href="./">Log out</a>
-</body>
+<?php
+  include "api/middleware.php"
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p>Halaman Utama</p>
+  </body>
 </html>

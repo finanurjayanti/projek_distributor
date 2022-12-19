@@ -6,6 +6,55 @@ class Controller {
         $this->db = $db;
     }
 
+    function isAdmin($username, $password) {
+        $conn = $this->db->connect();
+
+        $sql = "SELECT * FROM admin WHERE USERNAME='$username' AND PASSWORD='$password'";
+        $result = $conn->query($sql);
+
+        while($row = $result->fetch_assoc()) {
+            $this->db->close($conn);
+
+            if ($row["USERNAME"] == $username && $row["PASSWORD"] == $password) {
+                return 1;
+            }
+        }
+
+        return 0;
+    }
+
+    function isSession($session_id) {
+        $conn = $this->db->connect();
+
+        $sql = "SELECT * FROM session WHERE SESSION_ID='$session_id';";
+        $result = $conn->query($sql);
+
+        while($row = $result->fetch_assoc()) {
+            $this->db->close($conn);
+
+            if ($row["SESSION_ID"] == $session_id) {
+                return 1;
+            }
+        }
+
+        return 0;
+    }
+
+    function setSession() {
+        $conn = $this->db->connect();
+
+        $sid = rand(1000, 9999);
+        $sql = "INSERT INTO session (
+            SESSION_ID
+        ) VALUES (
+            $sid
+        );";
+
+        $conn->query($sql);
+        $this->db->close($conn);
+        setcookie("sessionid", $sid, time() + (86400 * 30), "/");
+    }
+
     function addFish($nama_ikan, $harga) {
         $conn = $this->db->connect();
 
@@ -151,5 +200,4 @@ class Controller {
 }
 
 $controller = new Controller($db);
-$controller->add(8, "Diriku", 1, 2);
 ?>
