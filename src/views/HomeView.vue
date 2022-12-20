@@ -1,15 +1,8 @@
-<script setup lang="ts">
-import { isSession } from "@/components/Helper.vue";
-</script>
+<script setup lang="ts"></script>
 
 <script lang="ts">
 export default {
   name: "HomeView",
-  async mounted() {
-    if (!(await isSession(this.$cookies.get("sessionid")))) {
-      this.$router.push("login");
-    }
-  },
 };
 </script>
 

@@ -77,6 +77,8 @@ class Controller
         $conn->query($sql);
         $this->db->close($conn);
         setcookie("sessionid", $sid, time() + (86400 * 30), "/");
+
+        return $sid;
     }
 
     function addFish($nama_ikan, $harga)

@@ -13,5 +13,20 @@ async function isSession(sessionid: string) {
   return res.data == 0 ? false : true;
 }
 
-export { isSession };
+async function login(username: string, password: string) {
+  const res = await axios.post(
+    "http://localhost/api/login.php",
+    `username=${encodeURIComponent(username)}&password=${encodeURIComponent(
+      password
+    )}`,
+    {
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    }
+  );
+
+  return res.data == 0 ? false : res.data;
+}
+
+export { isSession, login };
+export default {};
 </script>
