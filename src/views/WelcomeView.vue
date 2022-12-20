@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowRightCircleIcon } from "@heroicons/vue/24/solid";
+import TopoBackgroundComponent from "@/components/TopoBackgroundComponent.vue";
 </script>
 
 <script lang="ts">
@@ -12,6 +12,7 @@ export default {
 </script>
 
 <template>
+  <TopoBackgroundComponent />
   <div class="grid grid-rows-6 grid-flow-col w-screen h-screen">
     <div class="row-start-1 row-span-3 justify-center flex">
       <div class="flex items-end justify-center">
@@ -25,16 +26,20 @@ export default {
         </span>
       </div>
     </div>
-    <div class="row-start-4 row-span-1 justify-center flex">
+    <div class="row-start-4 row-span-1 justify-center flex mt-2">
       <a v-if="isSession" href="/home" class="h-max">
-        <ArrowRightCircleIcon
-          class="h-8 w-8 transition-all fill-emerald-600 duration-300 hover:scale-125 hover:fill-indigo-700"
-        />
+        <button
+          class="rounded-md backdrop-blur-sm bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+        >
+          Home
+        </button>
       </a>
       <a v-else href="/login" class="h-max">
-        <ArrowRightCircleIcon
-          class="h-8 w-8 transition-all fill-indigo-700 duration-300 hover:scale-125 hover:fill-emerald-600"
-        />
+        <button
+          class="rounded-md backdrop-blur-sm bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+        >
+          Login
+        </button>
       </a>
     </div>
     <div class="row-start-5 row-span-1"></div>
