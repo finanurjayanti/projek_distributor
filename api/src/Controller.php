@@ -1,18 +1,25 @@
 <?php
 include 'Database.php';
 
-class Controller {
-    function __construct($db) {
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
+class Controller
+{
+    private $db;
+
+    function __construct($db)
+    {
         $this->db = $db;
     }
 
-    function isAdmin($username, $password) {
+    function isAdmin($username, $password)
+    {
         $conn = $this->db->connect();
 
         $sql = "SELECT * FROM admin WHERE USERNAME='$username' AND PASSWORD='$password'";
         $result = $conn->query($sql);
 
-        while($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) {
             $this->db->close($conn);
 
             if ($row["USERNAME"] == $username && $row["PASSWORD"] == $password) {
@@ -23,13 +30,17 @@ class Controller {
         return 0;
     }
 
-    function isSession($session_id) {
+    function isSession($session_id)
+    {
         $conn = $this->db->connect();
+
+        // Hapus sesi yang kadaluwarsa
+        $this->deleteExpiredSession();
 
         $sql = "SELECT * FROM session WHERE SESSION_ID='$session_id';";
         $result = $conn->query($sql);
 
-        while($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) {
             $this->db->close($conn);
 
             if ($row["SESSION_ID"] == $session_id) {
@@ -40,14 +51,27 @@ class Controller {
         return 0;
     }
 
-    function setSession() {
+    function deleteExpiredSession()
+    {
+        $conn = $this->db->connect();
+
+        $sql = "DELETE FROM session WHERE TANGGAL < now();";
+
+        $conn->query($sql);
+        $this->db->close($conn);
+    }
+
+    function setSession()
+    {
         $conn = $this->db->connect();
 
         $sid = rand(1000, 9999);
         $sql = "INSERT INTO session (
-            SESSION_ID
+            SESSION_ID,
+            TANGGAL
         ) VALUES (
-            $sid
+            $sid,
+            now() + INTERVAL 24 HOUR
         );";
 
         $conn->query($sql);
@@ -55,7 +79,8 @@ class Controller {
         setcookie("sessionid", $sid, time() + (86400 * 30), "/");
     }
 
-    function addFish($nama_ikan, $harga) {
+    function addFish($nama_ikan, $harga)
+    {
         $conn = $this->db->connect();
 
         if ($this->getFishByName($nama_ikan)) {
@@ -80,14 +105,15 @@ class Controller {
         $this->db->close($conn);
     }
 
-    function increaseStock($id_ikan, $jumlah_kg) {
+    function increaseStock($id_ikan, $jumlah_kg)
+    {
         $conn = $this->db->connect();
         $ikan = $this->getFishById($id_ikan);
         if (!$ikan) {
             return;
         }
 
-        $stok = (int)$ikan["stok"] + $jumlah_kg;
+        $stok = (int) $ikan["stok"] + $jumlah_kg;
         echo $stok;
         $sql = "UPDATE daftar_ikan SET STOK_KG=$stok WHERE ID=$id_ikan";
 
@@ -98,14 +124,15 @@ class Controller {
         $this->db->close($conn);
     }
 
-    function decreaseStock($id_ikan, $jumlah_kg) {
+    function decreaseStock($id_ikan, $jumlah_kg)
+    {
         $conn = $this->db->connect();
         $ikan = $this->getFishById($id_ikan);
         if (!$ikan) {
             return;
         }
 
-        $stok = (int)$ikan["stok"] - $jumlah_kg;
+        $stok = (int) $ikan["stok"] - $jumlah_kg;
         echo $stok;
         $sql = "UPDATE daftar_ikan SET STOK_KG=$stok WHERE ID=$id_ikan";
 
@@ -116,17 +143,19 @@ class Controller {
         $this->db->close($conn);
     }
 
-    function getFishById($id) {
+    function getFishById($id)
+    {
         $conn = $this->db->connect();
         $sql = "SELECT * FROM daftar_ikan WHERE ID=$id;";
         $result = $conn->query($sql);
 
         if ($result == false) {
             return false;
-        };
+        }
+        ;
 
 
-        while($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) {
             $this->db->close($conn);
 
 
@@ -139,16 +168,18 @@ class Controller {
         }
     }
 
-    function getFishByName($nama_ikan) {
+    function getFishByName($nama_ikan)
+    {
         $conn = $this->db->connect();
         $sql = "SELECT * FROM daftar_ikan WHERE NAMA_IKAN='$nama_ikan';";
         $result = $conn->query($sql);
 
         if ($result == false) {
             return false;
-        };
+        }
+        ;
 
-        while($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) {
             $this->db->close($conn);
             return [
                 "id" => $row["ID"],
@@ -159,10 +190,11 @@ class Controller {
         }
     }
 
-    function add($id_ikan, $nama_orang, $jenis, $jumlah_kg) {
+    function add($id_ikan, $nama_orang, $jenis, $jumlah_kg)
+    {
         $conn = $this->db->connect();
         $ikan = $this->getFishById($id_ikan);
-        $harga = (int)$ikan["harga"] * $jumlah_kg;
+        $harga = (int) $ikan["harga"] * $jumlah_kg;
 
         if (!$this->getFishById($id_ikan)) {
             echo "Ikan tidak terdaftar";
@@ -200,4 +232,3 @@ class Controller {
 }
 
 $controller = new Controller($db);
-?>
