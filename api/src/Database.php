@@ -1,28 +1,30 @@
 <?php
-class Database {
+class Database
+{
     private $database = "distribusi";
     private $host = "127.0.0.1";
     private $username = "root";
     private $password = "";
 
-    private $maxPool = 10; 
+    private $maxPool = 10;
     public $connectionPool = [];
 
-    function __construct() {
+    function __construct()
+    {
         // Melakukan perulangan sebanyak $maxPool
         for ($i = 0; $i < $this->maxPool; $i++) {
-    
+
             // Membuat koneksi database
             $conn = new mysqli($this->host, $this->username, $this->password, $this->database);
-            
+
             // Jika terjadi error, maka ...
             if ($conn->connect_error) {
                 die("Connection  Failed: " . $conn->connect_error);
             }
-    
+
             // Koneksi yang berhasil dibuat, dimasukkan kedalam array $connectionPool
             array_push($this->connectionPool, $conn);
-        } 
+        }
 
 
         // Menyiapkan tabel
@@ -30,23 +32,26 @@ class Database {
     }
 
     // Mengambil koneksi database dari $connectionPool
-    function connect() {
+    function connect()
+    {
         return array_shift($this->connectionPool);
-        
     }
 
     // Menutup/Mengembalikan koneksi dari database ke $conectionPool
-    function close($conn) {
+    function close($conn)
+    {
         array_push($this->connectionPool, $conn);
     }
 
     // Menyiapkan tabel didalam database
-    private function makeTables() {
+    private function makeTables()
+    {
         $conn = $this->connect();
 
         $tableSession = "CREATE TABLE IF NOT EXISTS session (
             ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-            SESSION_ID INT NOT NULL
+            SESSION_ID INT NOT NULL,
+            EXPIRE DATE NOT NULL
         );";
 
         $tableAdmin = "CREATE TABLE IF NOT EXISTS admin (
@@ -90,4 +95,3 @@ class Database {
 }
 
 $db = new Database();
-?>
