@@ -81,31 +81,6 @@ class Controller
         return $sid;
     }
 
-    function addFish($nama_ikan, $harga)
-    {
-        $conn = $this->db->connect();
-
-        if ($this->getFishByName($nama_ikan)) {
-            return;
-        }
-
-        $sql = "INSERT INTO daftar_ikan (
-            NAMA_IKAN,
-            HARGA,
-            STOK_KG
-        ) VALUES (
-            '$nama_ikan',
-            $harga,
-            0
-        );";
-
-        if ($conn->query($sql) != TRUE) {
-            echo "Failed add fish: " . $conn->error;
-        }
-
-
-        $this->db->close($conn);
-    }
 
     function increaseStock($id_ikan, $jumlah_kg)
     {
@@ -145,6 +120,60 @@ class Controller
         $this->db->close($conn);
     }
 
+    function getAllFish()
+    {
+        $conn = $this->db->connect();
+        $sql = "SELECT * FROM daftar_ikan;";
+        $result = $conn->query($sql);
+
+        if ($result == false) {
+            return false;
+        }
+
+        $fishList = [];
+        while ($row = $result->fetch_assoc()) {
+            $this->db->close($conn);
+
+
+            array_push($fishList, [
+                "id" => $row["ID"],
+                "nama_ikan" => $row["NAMA_IKAN"],
+                "harga" => $row["HARGA"],
+                "stok" => $row["STOK_KG"]
+            ]);
+        }
+
+        return $fishList;
+    }
+
+    function addFish($nama_ikan, $harga)
+    {
+        $conn = $this->db->connect();
+
+        if ($this->getFishByName($nama_ikan)) {
+            return;
+        }
+
+        $sql = "INSERT INTO daftar_ikan (
+            NAMA_IKAN,
+            HARGA,
+            STOK_KG
+        ) VALUES (
+            '$nama_ikan',
+            $harga,
+            0
+        );";
+
+        if ($conn->query($sql) != TRUE) {
+            echo "Failed add fish: " . $conn->error;
+            return 0;
+        }
+
+
+        $this->db->close($conn);
+        return 1;
+    }
+
     function getFishById($id)
     {
         $conn = $this->db->connect();
@@ -154,8 +183,6 @@ class Controller
         if ($result == false) {
             return false;
         }
-        ;
-
 
         while ($row = $result->fetch_assoc()) {
             $this->db->close($conn);
@@ -179,7 +206,6 @@ class Controller
         if ($result == false) {
             return false;
         }
-        ;
 
         while ($row = $result->fetch_assoc()) {
             $this->db->close($conn);
