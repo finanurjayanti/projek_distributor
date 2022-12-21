@@ -39,14 +39,14 @@ export default {
   <div class="row-start-1 row-span-1">
     <div class="grid grid-rows-6 grid-cols-4 grid-flow-col w-screen h-screen">
       <div
-        class="group grid grid-rows-6 grid-cols-4 row-start-2 row-span-4 col-start-2 col-span-2 justify-center bg-black/10 flex rounded-3xl shadow-2xl backdrop-blur-sm"
+        class="group grid grid-rows-6 grid-cols-4 row-start-2 row-span-4 col-start-2 col-span-2 justify-center bg-white/40 flex rounded-3xl shadow-2xl backdrop-blur-sm"
       >
         <div
           class="row-start-1 row-span-2 col-start-2 col-span-2 flex items-center justify-center"
         >
           <span class="flex items-center justify-center">
             <p
-              class="font-bold text-8xl text-white group-hover:text-7xl transition-all duration-300"
+              class="font-bold text-8xl text-[#4d6bb9] group-hover:text-emerald-600 transition-all duration-1000"
             >
               Login
             </p>
@@ -77,10 +77,10 @@ export default {
                 @click="login()"
                 :disabled="isOnFetch"
                 type="button"
-                class="inline-flex space-x-2 justify-center rounded-md border border-transparent bg-green-200 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-600 hover:text-white"
+                class="rounded-md backdrop-blur-sm bg-black/40 px-5 py-2 text-sm font-medium text-white hover:bg-black/50"
               >
                 <Spinner v-if="isOnFetch" />
-                <span class="font-bold"> Submit </span>
+                <span class="font-bold">Submit</span>
               </button>
             </div></span
           >
@@ -88,7 +88,9 @@ export default {
         <div
           class="row-start-6 row-span-1 col-start-2 col-span-2 flex items-start justify-center"
         >
-          <p class="italic text-white">Contact admin to register new account</p>
+          <p class="italic text-grey-900">
+            Contact admin to register new account
+          </p>
         </div>
       </div>
     </div>
