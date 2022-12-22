@@ -4,9 +4,9 @@ export default {
     index: Number,
     personName: String,
     fishName: String,
-    isSold: Number,
-    value: Number,
-    price: Number,
+    type: String,
+    value: String,
+    price: String,
     date: String,
   },
 };
@@ -30,11 +30,11 @@ export default {
     >
     <span
       class="font-medium col-start-6 col-span-2 flex justify-center items-center"
-      ><p>{{ isSold ? "Penjualan" : "Pembelian" }}</p></span
+      ><p>{{ type }}</p></span
     >
     <span
       class="font-medium col-start-8 col-span-1 flex justify-center items-center"
-      ><p>{{ value }} Kg</p></span
+      ><p>{{ value }}</p></span
     >
 
     <span

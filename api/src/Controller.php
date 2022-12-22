@@ -272,6 +272,32 @@ class Controller
         return $transactions;
     }
 
+    function getYearTransactions()
+    {
+        $conn = $this->db->connect();
+        $sql = "SELECT PENJUALAN, JUMLAH_KG, JUMLAH_HARGA, TANGGAL, MONTH(TANGGAL) as BULAN FROM riwayat WHERE YEAR(riwayat.TANGGAL)=YEAR(now());";
+        $result = $conn->query($sql);
+
+        if ($result == false) {
+            return false;
+        }
+
+        $transactions = [];
+        while ($row = $result->fetch_assoc()) {
+            $this->db->close($conn);
+
+            array_push($transactions, [
+                "penjualan" => $row["PENJUALAN"],
+                "jumlah_kg" => $row["JUMLAH_KG"],
+                "jumlah_harga" => $row["JUMLAH_HARGA"],
+                "tanggal" => $row["TANGGAL"],
+                "bulan" => $row["BULAN"]
+            ]);
+        }
+
+        return $transactions;
+    }
+
     function add($id_ikan, $nama_orang, $jenis, $jumlah_kg)
     {
         $conn = $this->db->connect();

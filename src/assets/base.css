@@ -12,3 +12,14 @@
   border-radius: 100vh;
   border: 2px solid #f6f7ed;
 }
+
+.scrollbar-white::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.scrollbar-white::-webkit-scrollbar-thumb {
+  background: #f6f7ed;
+  border-radius: 100vh;
+  border: 2px solid #4d6bb9;
+}
