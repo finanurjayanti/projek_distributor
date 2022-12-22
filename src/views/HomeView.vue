@@ -114,7 +114,9 @@ export default {
       >
         <span class="font-bold text-black text-xl"><p>Daftar Ikan</p></span>
       </div>
-      <div class="row-start-2 row-span-1 col-start-1 col-span-6 p-1">
+      <div
+        class="row-start-2 row-span-1 col-start-1 col-span-6 p-1 overflow-y-scroll scrollbar"
+      >
         <FishList fish-name="Nama Ikan" price="Harga" stock="Stok" />
       </div>
       <div
@@ -139,7 +141,9 @@ export default {
           ><p>Transaksi Hari Ini</p></span
         >
       </div>
-      <div class="row-start-2 row-span-1 col-start-1 col-span-6 p-1">
+      <div
+        class="row-start-2 row-span-1 col-start-1 col-span-6 p-1 overflow-y-scroll scrollbar"
+      >
         <TransactionList
           :index="0"
           person-name="Nama"
@@ -176,7 +180,9 @@ export default {
           ><p>Rekapitulasi Pendapatan</p>
         </span>
       </div>
-      <div class="row-start-2 row-span-1 col-start-1 col-span-6 p-1">
+      <div
+        class="row-start-2 row-span-1 col-start-1 col-span-6 p-1 overflow-y-scroll scrollbar"
+      >
         <SummaryList month="Bulan" value="Jumlah Kg" profit="Pendapatan" />
       </div>
       <div
