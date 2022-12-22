@@ -218,6 +218,60 @@ class Controller
         }
     }
 
+    function getAllTransactions()
+    {
+        $conn = $this->db->connect();
+        $sql = "SELECT riwayat.NAMA_ORANG, daftar_ikan.NAMA_IKAN, riwayat.PENJUALAN, riwayat.JUMLAH_KG, riwayat.JUMLAH_HARGA, riwayat.TANGGAL FROM riwayat INNER JOIN daftar_ikan ON riwayat.ID_IKAN=daftar_ikan.ID;";
+        $result = $conn->query($sql);
+
+        if ($result == false) {
+            return false;
+        }
+
+        $transactions = [];
+        while ($row = $result->fetch_assoc()) {
+            $this->db->close($conn);
+
+            array_push($transactions, [
+                "nama_orang" => $row["NAMA_ORANG"],
+                "nama_ikan" => $row["NAMA_IKAN"],
+                "penjualan" => $row["PENJUALAN"],
+                "jumlah_kg" => $row["JUMLAH_KG"],
+                "jumlah_harga" => $row["JUMLAH_HARGA"],
+                "tanggal" => $row["TANGGAL"]
+            ]);
+        }
+
+        return $transactions;
+    }
+
+    function getDayTransactions()
+    {
+        $conn = $this->db->connect();
+        $sql = "SELECT riwayat.NAMA_ORANG, daftar_ikan.NAMA_IKAN, riwayat.PENJUALAN, riwayat.JUMLAH_KG, riwayat.JUMLAH_HARGA, riwayat.TANGGAL FROM riwayat INNER JOIN daftar_ikan ON riwayat.ID_IKAN=daftar_ikan.ID WHERE riwayat.TANGGAL=CAST(Date(Now()) as Date);";
+        $result = $conn->query($sql);
+
+        if ($result == false) {
+            return false;
+        }
+
+        $transactions = [];
+        while ($row = $result->fetch_assoc()) {
+            $this->db->close($conn);
+
+            array_push($transactions, [
+                "nama_orang" => $row["NAMA_ORANG"],
+                "nama_ikan" => $row["NAMA_IKAN"],
+                "penjualan" => $row["PENJUALAN"],
+                "jumlah_kg" => $row["JUMLAH_KG"],
+                "jumlah_harga" => $row["JUMLAH_HARGA"],
+                "tanggal" => $row["TANGGAL"]
+            ]);
+        }
+
+        return $transactions;
+    }
+
     function add($id_ikan, $nama_orang, $jenis, $jumlah_kg)
     {
         $conn = $this->db->connect();
