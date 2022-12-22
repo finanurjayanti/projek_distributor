@@ -1,5 +1,5 @@
 <template>
-  <div class="w-screen h-screen absolute -z-10" id="background"></div>
+  <div class="w-screen h-screen fixed -z-10" id="background"></div>
 </template>
 
 <style scoped>

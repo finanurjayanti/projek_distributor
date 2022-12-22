@@ -25,7 +25,9 @@ const tabList = [
 
 <template>
   <TabGroup @change="changeTab">
-    <TabList class="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+    <TabList
+      class="flex space-x-1 rounded-xl bg-black/10 p-1 backdrop-blur-sm shadow-xl transition-all duration-200"
+    >
       <Tab
         v-for="tab of tabList"
         as="template"
@@ -34,11 +36,11 @@ const tabList = [
       >
         <button
           :class="[
-            'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700',
+            'w-full rounded-lg py-2.5 text-sm font-bold leading-5 text-blue-700',
             'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
             selected
               ? 'bg-white shadow'
-              : 'text-emerald-600 hover:bg-white/[0.12] hover:text-blue-700',
+              : 'text-gray-700 hover:bg-white/[0.12] hover:text-emerald-600',
           ]"
         >
           {{ tab.name }}
