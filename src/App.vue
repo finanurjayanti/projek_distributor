@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
+import { RouterView } from "vue-router";
 import { isSession } from "./components/Helper.vue";
 import MainTab from "@/components/MainTabComponent.vue";
 </script>
@@ -32,7 +32,7 @@ export default {
     }
 
     // Show tab menu except on / or /login
-    if (!currentPath.match(/^\/(login)?$/)) {
+    if (!currentPath.match(/^\/(login)?$/) && this.session) {
       this.tab = true;
     }
   },
@@ -48,8 +48,8 @@ export default {
       rel="stylesheet"
     />
   </head>
-  <RouterView :isSession="session" />
+  <RouterView :isSession="session"> </RouterView>
   <div v-if="tab" class="fixed bottom-5 translate-x-1/2 inset-x-0 w-6/12">
-    <MainTab></MainTab>
+    <MainTab />
   </div>
 </template>

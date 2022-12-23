@@ -20,6 +20,14 @@ const tabList = [
     name: "Transaction",
     route: "transaction",
   },
+  {
+    name: "Admin",
+    route: "admin",
+  },
+  {
+    name: "Logout",
+    route: "logout",
+  },
 ];
 </script>
 

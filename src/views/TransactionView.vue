@@ -39,7 +39,7 @@ export default {
   <TopoBackground />
   <div class="grid grid-cols-12 grid-rows-6 w-screen h-screen">
     <div
-      class="row-start-1 row-span-5 col-start-1 col-span-12 rounded-xl m-2 bg-white/20 backdrop-blur-md shadow-xl border-4 border-white p-1 flex flex-col space-y-1"
+      class="row-start-1 row-span-5 col-start-1 col-span-12 rounded-xl m-2 bg-white/20 backdrop-blur-md shadow-xl border-4 border-[#4d6bb9] p-1 flex flex-col space-y-1"
     >
       <span class="overflow-y-scroll scrollbar">
         <TransactionList

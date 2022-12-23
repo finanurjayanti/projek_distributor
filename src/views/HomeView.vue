@@ -39,7 +39,7 @@ export default {
   name: "HomeView",
   async mounted() {
     this.getFishList();
-    this.getDayTransactionList();
+    this.getMonthTransactionList();
     this.getSummaryTransactionList();
   },
   methods: {
@@ -48,9 +48,9 @@ export default {
         this.fishList = res.data;
       });
     },
-    async getDayTransactionList() {
+    async getMonthTransactionList() {
       await axios
-        .get("http://localhost/api/day-transactions.php")
+        .get("http://localhost/api/month-transactions.php")
         .then((res) => {
           this.transactionList = res.data;
         });
@@ -138,7 +138,7 @@ export default {
         class="row-start-1 row-span-1 col-start-1 col-span-2 m-1 flex items-center justify-start rounded-md p-2 bg-white/30 backdrop-blur-sm"
       >
         <span class="font-bold text-black text-xl"
-          ><p>Transaksi Hari Ini</p></span
+          ><p>Transaksi Bulan Ini</p></span
         >
       </div>
       <div

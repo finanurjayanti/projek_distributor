@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import WelcomeView from "@/views/WelcomeView.vue";
 import LoginView from "@/views/LoginView.vue";
+import LogoutView from "@/views/LogoutView.vue";
 import HomeView from "@/views/HomeView.vue";
 import TransactionView from "@/views/TransactionView.vue";
 
@@ -26,6 +27,16 @@ const router = createRouter({
       path: "/transaction",
       name: "transaction",
       component: TransactionView,
+    },
+    {
+      path: "/admin",
+      name: "admin",
+      component: TransactionView,
+    },
+    {
+      path: "/logout",
+      name: "logout",
+      component: LogoutView,
     },
   ],
 });

@@ -21,14 +21,16 @@ export default {
   methods: {
     async login() {
       this.isOnFetch = true;
-      await loginApi(this.username, this.password).then((res) => {
-        this.isOnFetch = false;
-
-        if (res) {
-          this.$cookies.set("sessionid", res);
-          this.$router.push("home");
-        }
-      });
+      await loginApi(this.username, this.password)
+        .then((res) => {
+          if (res) {
+            this.$cookies.set("sessionid", res);
+            location.href = "/home";
+          }
+        })
+        .finally(() => {
+          this.isOnFetch = false;
+        });
     },
   },
 };
