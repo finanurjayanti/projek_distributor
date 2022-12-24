@@ -91,7 +91,6 @@ class Controller
         }
 
         $stok = (int) $ikan["stok"] + $jumlah_kg;
-        echo $stok;
         $sql = "UPDATE daftar_ikan SET STOK_KG=$stok WHERE ID=$id_ikan";
 
         if ($conn->query($sql) != TRUE) {
@@ -110,7 +109,10 @@ class Controller
         }
 
         $stok = (int) $ikan["stok"] - $jumlah_kg;
-        echo $stok;
+
+        if ($stok < 0)
+            return false;
+
         $sql = "UPDATE daftar_ikan SET STOK_KG=$stok WHERE ID=$id_ikan";
 
         if ($conn->query($sql) != TRUE) {
@@ -325,7 +327,7 @@ class Controller
         return $transactions;
     }
 
-    function add($id_ikan, $nama_orang, $jenis, $jumlah_kg)
+    function addTransaction($id_ikan, $nama_orang, $jenis, $jumlah_kg)
     {
         $conn = $this->db->connect();
         $ikan = $this->getFishById($id_ikan);
@@ -335,6 +337,16 @@ class Controller
             echo "Ikan tidak terdaftar";
             return;
         }
+
+        $isValid = true;
+        if ($jenis == 0) {
+            $this->increaseStock($id_ikan, $jumlah_kg);
+        } else {
+            $isValid = $this->decreaseStock($id_ikan, $jumlah_kg);
+        }
+
+        if (!$isValid)
+            return 0;
 
         $sql = "INSERT INTO riwayat (
             ID_IKAN,
@@ -353,16 +365,12 @@ class Controller
         );";
 
         if ($conn->query($sql) != TRUE) {
-            echo "Failed add record: " . $conn->error;
+            return 0;
         } else {
-            if ($jenis == 0) {
-                $this->increaseStock($id_ikan, $jumlah_kg);
-            } else {
-                $this->decreaseStock($id_ikan, $jumlah_kg);
-            }
         }
 
         $this->db->close($conn);
+        return 1;
     }
 }
 

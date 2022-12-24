@@ -41,9 +41,9 @@ export default {
     <div
       class="row-start-1 row-span-5 col-start-1 col-span-12 rounded-xl m-2 bg-white/20 backdrop-blur-md shadow-xl border-4 border-[#4d6bb9] p-1 flex flex-col space-y-1"
     >
-      <span class="overflow-y-scroll scrollbar">
+      <span class="">
         <TransactionList
-          :index="0"
+          index="Nomor"
           person-name="Nama"
           fish-name="Nama Ikan"
           type="Tipe"
@@ -55,7 +55,7 @@ export default {
       <div class="overflow-y-scroll scrollbar flex flex-col space-y-0.5">
         <span v-for="(transaction, index) in transactionList">
           <TransactionList
-            :index="index + 1"
+            :index="`${index + 1}`"
             :person-name="transaction.nama_orang"
             :fish-name="transaction.nama_ikan"
             :type="transaction.penjualan ? 'Penjualan' : 'Pembelian'"

@@ -1,7 +1,7 @@
 <script lang="ts">
 export default {
   props: {
-    index: Number,
+    index: String,
     personName: String,
     fishName: String,
     type: String,

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 // @ts-nocheck
+import MenuComponent from "@/components/MenuComponent.vue";
 import TopoBackground from "@/components/TopoBackgroundComponent.vue";
 import FishList from "@/components/FishListComponent.vue";
 import TransactionList from "@/components/TransactionListComponent.vue";
@@ -10,8 +11,12 @@ import axios from "axios";
 
 <script lang="ts">
 export default {
+  props: {
+    isSession: Boolean,
+  },
   data() {
     return {
+      fishMenu: [],
       fishList: [
         {
           nama_ikan: "",
@@ -19,6 +24,7 @@ export default {
           stok: 0,
         },
       ],
+      transactionMenu: [],
       transactionList: [
         {
           nama_orang: "",
@@ -42,6 +48,30 @@ export default {
     this.getFishList();
     this.getMonthTransactionList();
     this.getSummaryTransactionList();
+
+    this.fishMenu = [
+      {
+        text: "Tambah",
+        action: () => {
+          console.log("Tambah Ikan");
+        },
+      },
+      {
+        text: "Edit",
+        action: () => {
+          console.log("Edit Ikan");
+        },
+      },
+    ];
+
+    this.transactionMenu = [
+      {
+        text: "Tambah",
+        action: () => {
+          console.log("Tambah Transaksi");
+        },
+      },
+    ];
   },
   methods: {
     async getFishList() {
@@ -116,6 +146,11 @@ export default {
         <span class="font-bold text-black text-xl"><p>Daftar Ikan</p></span>
       </div>
       <div
+        class="row-start-1 row-span-1 col-start-6 col-span-1 m-1 flex justify-end items-center"
+      >
+        <MenuComponent menu-text="Menu" :menu-list="fishMenu" />
+      </div>
+      <div
         class="row-start-2 row-span-1 col-start-1 col-span-6 p-1 overflow-y-scroll scrollbar"
       >
         <FishList fish-name="Nama Ikan" price="Harga" stock="Stok" />
@@ -143,10 +178,15 @@ export default {
         >
       </div>
       <div
+        class="row-start-1 row-span-1 col-start-6 col-span-1 m-1 flex justify-end items-center"
+      >
+        <MenuComponent menu-text="Menu" :menu-list="transactionMenu" />
+      </div>
+      <div
         class="row-start-2 row-span-1 col-start-1 col-span-6 p-1 overflow-y-scroll scrollbar"
       >
         <TransactionList
-          :index="0"
+          index="Nomor"
           person-name="Nama"
           fish-name="Nama Ikan"
           type="Tipe"
@@ -160,10 +200,10 @@ export default {
       >
         <span v-for="(transaction, index) in transactionList">
           <TransactionList
-            :index="index + 1"
+            :index="`${index + 1}`"
             :person-name="transaction.nama_orang"
             :fish-name="transaction.nama_ikan"
-            :type="transaction.penjualan ? 'Penjualan' : 'Pembelian'"
+            :type="transaction.penjualan == '1' ? 'Penjualan' : 'Pembelian'"
             :value="`${transaction.jumlah_kg} Kg`"
             :price="`${intToIdr(transaction.jumlah_harga)}`"
             :date="transaction.tanggal"
@@ -172,7 +212,7 @@ export default {
       </div>
     </div>
     <div
-      class="row-start-3 row-span-3 col-start-1 col-span-12 bg-blue-900 rounded-xl m-3 grid grid-cols-6 grid-rows-12"
+      class="row-start-3 row-span-3 col-start-1 col-span-12 bg-blue-800 rounded-xl m-3 grid grid-cols-6 grid-rows-12"
     >
       <div
         class="row-start-1 row-span-1 col-start-1 col-span-2 m-1 flex items-center justify-start rounded-md p-2"
