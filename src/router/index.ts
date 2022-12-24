@@ -29,11 +29,6 @@ const router = createRouter({
       component: TransactionView,
     },
     {
-      path: "/admin",
-      name: "admin",
-      component: TransactionView,
-    },
-    {
       path: "/logout",
       name: "logout",
       component: LogoutView,

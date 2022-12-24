@@ -28,6 +28,7 @@ export default {
             location.href = "/home";
           }
         })
+        // @ts-ignore
         .finally(() => {
           this.isOnFetch = false;
         });

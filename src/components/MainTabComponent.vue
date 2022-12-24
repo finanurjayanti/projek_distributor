@@ -21,10 +21,6 @@ const tabList = [
     route: "transaction",
   },
   {
-    name: "Admin",
-    route: "admin",
-  },
-  {
     name: "Logout",
     route: "logout",
   },

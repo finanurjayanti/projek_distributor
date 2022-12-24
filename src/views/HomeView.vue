@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// @ts-nocheck
 import TopoBackground from "@/components/TopoBackgroundComponent.vue";
 import FishList from "@/components/FishListComponent.vue";
 import TransactionList from "@/components/TransactionListComponent.vue";
@@ -191,7 +192,7 @@ export default {
         <span v-for="month of Object.keys(summaryList)">
           <SummaryList
             :month="month"
-            :value="summaryList[month].jumlah_kg"
+            :value="`${summaryList[month].jumlah_kg}`"
             :profit="`${intToIdr(summaryList[month].jumlah_harga)}`"
           />
         </span>
