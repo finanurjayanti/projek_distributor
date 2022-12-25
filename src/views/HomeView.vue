@@ -1,11 +1,12 @@
 <script setup lang="ts">
 // @ts-nocheck
+import { intToIdr } from "@/components/Helper.vue";
 import MenuComponent from "@/components/MenuComponent.vue";
 import TopoBackground from "@/components/TopoBackgroundComponent.vue";
 import FishList from "@/components/FishListComponent.vue";
 import TransactionList from "@/components/TransactionListComponent.vue";
 import SummaryList from "@/components/SummaryListComponent.vue";
-import { intToIdr } from "@/components/Helper.vue";
+import AddTransactionField from "@/components/AddTransactionFieldElement.vue";
 import axios from "axios";
 </script>
 
@@ -16,6 +17,8 @@ export default {
   },
   data() {
     return {
+      dialogShow: false,
+      transactionDialogShow: false,
       fishMenu: [],
       fishList: [
         {
@@ -68,7 +71,8 @@ export default {
       {
         text: "Tambah",
         action: () => {
-          console.log("Tambah Transaksi");
+          this.dialogShow = !this.dialogShow;
+          this.transactionDialogShow = !this.transactionDialogShow;
         },
       },
     ];
@@ -136,9 +140,24 @@ export default {
 
 <template>
   <TopoBackground />
+  <transition
+    enter-active-class="transition duration-100 fade"
+    enter-from-class="transform scale-95 opacity-0"
+    enter-to-class="transform scale-100 opacity-100"
+    leave-active-class="transition duration-75 fade"
+    leave-from-class="transform scale-100 opacity-100"
+    leave-to-class="transform scale-95 opacity-0"
+  >
+    <div
+      class="w-screen h-screen flex justify-center items-center absolute"
+      v-if="dialogShow"
+    >
+      <AddTransactionField v-if="transactionDialogShow" />
+    </div>
+  </transition>
   <div class="grid grid-cols-12 grid-rows-6 w-screen h-screen">
     <div
-      class="row-start-1 row-span-2 col-start-1 col-span-5 rounded-xl m-3 grid grid-cols-6 grid-rows-6"
+      class="row-start-1 row-span-2 col-start-1 col-span-4 rounded-xl m-3 grid grid-cols-6 grid-rows-6"
     >
       <div
         class="row-start-1 row-span-1 col-start-1 col-span-2 m-1 flex items-center justify-start rounded-md p-2 bg-white/30 backdrop-blur-sm"
@@ -168,7 +187,7 @@ export default {
       </div>
     </div>
     <div
-      class="row-start-1 row-span-2 col-start-6 col-span-7 rounded-xl m-3 grid grid-cols-6 grid-rows-6"
+      class="row-start-1 row-span-2 col-start-5 col-span-8 rounded-xl m-3 grid grid-cols-6 grid-rows-6"
     >
       <div
         class="row-start-1 row-span-1 col-start-1 col-span-2 m-1 flex items-center justify-start rounded-md p-2 bg-white/30 backdrop-blur-sm"
