@@ -6,8 +6,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $isAdmin = $controller->isAdmin($data["username"], $data["password"]);
 
-    if ($isAdmin) {
-        $controller->setSession();
+    if ($isAdmin == "1") {
+        echo $controller->setSession();
+        return;
     }
 
     echo $isAdmin;
